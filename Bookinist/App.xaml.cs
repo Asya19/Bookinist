@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Bookinist.Services;
+using Bookinist.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Windows;
@@ -21,13 +23,13 @@ namespace Bookinist
         // создаем возможность доступа к сервисам посредствам хоста
         // если обращение к сервисам будет раньше, чем заплонировалось, то
         // это все равно приведет к создаю хоста
-        public static IServiceProvider Service => Host.Services;
+        public static IServiceProvider Services => Host.Services;
 
-        internal static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
-        {
-            throw new NotImplementedException();
-        }
-
+        // Регистрация вью моделй, сервисов
+        internal static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
+            .AddServices()
+            .AddViewModels()
+        ;
 
         // Запуск хоста
         protected override async void OnStartup(StartupEventArgs e)
